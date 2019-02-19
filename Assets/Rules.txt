@@ -1,0 +1,7 @@
+
+[BuildAssetsWithDirectroyName]
+searchPath=Assets/SampleAssets
+searchPattern=*.prefab
+searchOption=AllDirectories
+bundleName=
+

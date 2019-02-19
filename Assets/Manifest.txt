@@ -1,0 +1,18 @@
+manifest:
+	Assets/Manifest.txt
+
+shared/assets/sampleassets/picture_2:
+	Assets/SampleAssets/Picture/0_Amorphous.png
+	Assets/SampleAssets/Picture/0_Beast.png
+
+assets/sampleassets/cube_2:
+	Assets/SampleAssets/Cube/Cube.prefab
+	Assets/SampleAssets/Picture/CubeM.mat
+
+assets/sampleassets/prefab_1:
+	Assets/SampleAssets/Prefab/TestPanel.prefab
+
+assets/sampleassets/sphere_2:
+	Assets/SampleAssets/Sphere/Sphere.prefab
+	Assets/SampleAssets/Picture/SphereM.mat
+

@@ -1,0 +1,11 @@
+[BuildAssetsWithFilename]
+searchPath=Assets/SampleAssets
+searchPattern=*.prefab
+searchOption=AllDirectories
+bundleName=
+[BuildAssetsWithDirectroyName]
+searchPath=Assets/SampleAssets
+searchPattern=*.prefab
+searchOption=AllDirectories
+bundleName=
+
