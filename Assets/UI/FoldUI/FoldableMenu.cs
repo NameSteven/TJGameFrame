@@ -27,7 +27,7 @@ public class FoldableMenu : MonoBehaviour
     {
         isHorizontal = transform.GetComponent<ScrollRect>().horizontal;
         content = transform.Find("Viewport/Content").GetComponent<RectTransform>();
-        textAsset = Resources.Load<TextAsset>("menuInfo");
+     //   textAsset = Resources.Load<TextAsset>("menuInfo");
 
         #region
         //parentRect = Resources.Load<RectTransform>("parentMenu");
