@@ -120,7 +120,12 @@ namespace XAsset
         protected override void OnLoad()
         {
             request = Bundles.Load(Assets.GetBundleName(assetPath));
-            asset = request.LoadAsset(Assets.GetAssetName(assetPath), assetType);
+            if (Assets.IsTjFrame) {
+                asset = request.LoadAsset(assetPath, assetType);
+            } else {
+                asset = request.LoadAsset(Assets.GetAssetName(assetPath), assetType);
+            }
+         //   asset = request.LoadAsset(Assets.GetAssetName(assetPath), assetType);
         }
 
         protected override void OnUnload()

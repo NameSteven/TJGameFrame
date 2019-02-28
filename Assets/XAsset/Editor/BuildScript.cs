@@ -20,8 +20,16 @@ namespace XAsset.Editor
            // string outputPath = Path.Combine(EditorUtility.AssetBundlesOutputPath, EditorUtility.GetPlatformName());
          //  string outputPath = string.Format("{0}/{1}/{2}",Application.dataPath, EditorUtility.AssetBundlesOutputPath, EditorUtility.GetPlatformName());// Path.Combine(EditorUtility.AssetBundlesOutputPath, EditorUtility.GetPlatformName());
             string outputPath= string.Format("{0}/{1}/{2}", Application.streamingAssetsPath, EditorUtility.AssetBundlesOutputPath, EditorUtility.GetPlatformName());
-            if (!Directory.Exists(outputPath))
+           
+          
+
+            if (!Directory.Exists(outputPath)) {
                 Directory.CreateDirectory(outputPath);
+            } else {
+                Directory.Delete(outputPath, true);
+                Directory.CreateDirectory(outputPath);
+            }
+              
 
             return outputPath;
         }
@@ -197,7 +205,7 @@ namespace XAsset.Editor
             return Path.Combine(relativeAssetBundlesOutputPathForPlatform, EditorUtility.GetPlatformName()) + ".manifest";
         }
 
-        static void SaveManifest(string path, List<AssetBundleBuild> builds)
+      public  static void SaveManifest(string path, List<AssetBundleBuild> builds)
         {
             if (File.Exists(path))
             {

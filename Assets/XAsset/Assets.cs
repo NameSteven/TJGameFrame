@@ -8,6 +8,8 @@ namespace XAsset
     //提供上层逻辑接口 不用知道具体的assetbundle加载
     public sealed class Assets : MonoBehaviour
     {
+
+        public static bool IsTjFrame = true;//
         static Assets instance; 
 
         static Manifest manifest = new Manifest();
@@ -59,24 +61,46 @@ namespace XAsset
 #else
 				Path.Combine(Application.streamingAssetsPath, relativePath) + "/"; 
 #endif
-            if (Bundles.Initialize(url)) {
-                var bundle = Bundles.Load("manifest");
-                if (bundle != null) {
-                    var asset = bundle.LoadAsset<TextAsset>("Manifest.txt");
-                    if (asset != null) {
-                        using (var reader = new StringReader(asset.text)) {
-                            manifest.Load(reader);
-                            reader.Close();
+            if (!IsTjFrame) {
+                if (Bundles.Initialize(url)) {
+                    var bundle = Bundles.Load("manifest");
+                    if (bundle != null) {
+                        var asset = bundle.LoadAsset<TextAsset>("Manifest.txt");
+                        if (asset != null) {
+                            using (var reader = new StringReader(asset.text)) {
+                                manifest.Load(reader);
+                                reader.Close();
+                            }
+                            bundle.Release();
+                            Resources.UnloadAsset(asset);
+                            asset = null;
                         }
-                        bundle.Release();
-                        Resources.UnloadAsset(asset);
-                        asset = null;
+                        return true;
                     }
-                    return true;
+                    throw new FileNotFoundException("assets manifest not exist.");
                 }
-                throw new FileNotFoundException("assets manifest not exist.");
+                throw new FileNotFoundException("bundle manifest not exist.");
+            } else {
+                if (Bundles.Initialize(url)) {
+                    var bundle = Bundles.Load("TJManifest");
+                    if (bundle != null) {
+                        var asset = bundle.LoadAsset<TextAsset>("TJManifest.txt");
+                        if (asset != null) {
+                            using (var reader = new StringReader(asset.text)) {
+                                manifest.Load(reader);
+                                reader.Close();
+                            }
+                            bundle.Release();
+                            Resources.UnloadAsset(asset);
+                            asset = null;
+                        }
+                        return true;
+                    }
+                    throw new FileNotFoundException("assets manifest not exist.");
+                }
+                throw new FileNotFoundException("bundle manifest not exist.");
             }
-            throw new FileNotFoundException("bundle manifest not exist.");
+           
         }
 
 

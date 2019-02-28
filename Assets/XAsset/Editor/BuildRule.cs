@@ -11,7 +11,7 @@ namespace XAsset.Editor
         protected static List<string> packedAssets = new List<string>();//公用的资源
         protected static List<AssetBundleBuild> builds = new List<AssetBundleBuild>();//需要打包的assetbundlebuild
         static List<BuildRule> rules = new List<BuildRule>();//打包规则列表
-        static Dictionary<string, List<string>> allDependencies = new Dictionary<string, List<string>>();//依赖资源列表
+        static Dictionary<string, List<string>> allDependencies = new Dictionary<string, List<string>>();//依赖资源列表（包含所有需要的打包的资源 后面是依赖项）
 
         static BuildRule()
         {
@@ -223,7 +223,7 @@ namespace XAsset.Editor
                             if (!bundles.TryGetValue(name, out list))
                             {
                                 list = new List<string>();
-                                bundles.Add(name, list);
+                                bundles.Add(name, list); 
                             }
                             if (!list.Contains(assetPath))
                             {

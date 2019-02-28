@@ -62,7 +62,69 @@ namespace XAsset.Editor
 			List<AssetBundleBuild> builds = BuildRule.GetBuilds (assetsManifesttxt);
             BuildScript.BuildManifest (assetsManifesttxt, builds);
 			BuildScript.BuildAssetBundles (builds);
-		}  
+		}
+
+       static string BuildAsetPath = "/SampleAssets";
+        static string TjassetsManifesttxt = "Assets/TJManifest.txt";
+        static List<AssetBundleBuild> AssetBundleBuildList = new List<AssetBundleBuild>();
+        [MenuItem("Assets/XAsset/Build AssetBundles by dir")]
+        public static void BuildAssetBundleByDir() {
+            AssetBundleBuildList.Clear();
+            AssetBundleBuild assetbundlebuild = new AssetBundleBuild();
+            assetbundlebuild.assetBundleName = "TJManifest";
+            assetbundlebuild.assetNames = new string[] { TjassetsManifesttxt };
+            AssetBundleBuildList.Add(assetbundlebuild);
+
+            string buildPath = Application.dataPath + BuildAsetPath;
+            DoBuildAssetBundleByDir(buildPath);
+
+
+            BuildScript.SaveManifest(TjassetsManifesttxt, AssetBundleBuildList);
+
+            BuildScript.BuildAssetBundles(AssetBundleBuildList);
+        }
+
+     
+        static void DoBuildAssetBundleByDir(string path) {
+          
+
+            string[] files = Directory.GetDirectories(path);
+            for (int i = 0; i < files.Length; i++) {
+                files[i] = files[i].Replace('\\', '/');
+                int index = files[i].LastIndexOf("/");
+                string DirName = files[i].Substring(index+1);
+                if (DirName.StartsWith("@")) {
+                    AssetBundleBuild assetBundleBuild = new AssetBundleBuild();
+                    int index1 = Application.dataPath.Length;
+                    string bundleName = files[i].Substring(index1 + 1);
+                    assetBundleBuild.assetBundleName = bundleName;
+                    string[] ChildFiles = Directory.GetFiles(files[i]);//"E:/selfLearnPlace/xasset-master/xasset-master/Assets/SampleAssets/@Cube\\Cube.prefab"
+                    List<string> AssetNames = new List<string>();
+                    for (int j = 0; j < ChildFiles.Length; j++) {
+                        ChildFiles[j] = ChildFiles[j].Replace('\\', '/');
+                       
+                        if (!ChildFiles[j].EndsWith(".meta")) {
+                          
+                          string childName= "Assets/" + ChildFiles[j].Substring(index1+1);
+                            AssetNames.Add(childName);
+                         
+                        }
+                    }
+                    assetBundleBuild.assetNames= AssetNames.ToArray();
+                    AssetBundleBuildList.Add(assetBundleBuild);
+                    Debug.Log(ChildFiles.Length);
+                } else {
+                    DoBuildAssetBundleByDir(files[i]);
+                }
+                Debug.Log(DirName);
+            }
+            Debug.Log(AssetBundleBuildList.Count);
+
+          
+
+          
+
+        }
 
 		[MenuItem ("Assets/XAsset/Copy AssetBundles to StreamingAssets")]  
 		public static void CopyAssetBundlesToStreamingAssets ()

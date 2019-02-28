@@ -5,11 +5,11 @@ using XAsset;
 public class AssetsTest : MonoBehaviour
 {
     //  [SerializeField] string assetPath = "Assets/SampleAssets/Logo.prefab";
-    [SerializeField]
-    string assetPath = "Assets/SampleAssets/Prefab/TestPanel.prefab";
+   // [SerializeField]
+    string assetPath = "Assets/SampleAssets/@Prefab/TestPanel.prefab";
 
-    string cubePath = "Assets/SampleAssets/Cube/Cube.prefab";
-    string sypherePath = "Assets/SampleAssets/Sphere/Sphere.prefab";
+    string cubePath = "Assets/SampleAssets/@Cube/Cube.prefab";
+    string sypherePath = "Assets/SampleAssets/@Sphere/Sphere.prefab";
 
     void Start()
     {
@@ -42,7 +42,8 @@ public class AssetsTest : MonoBehaviour
 
             var prefab = asset.asset;
             if (prefab != null) {
-                testpanel = Instantiate(prefab) as GameObject;
+                testpanel = Instantiate(prefab, GameObject.Find("Canvas").transform) as GameObject;
+              //  testpanel.transform.SetParent(GameObject.Find("Canvas").transform);
                 ReleaseAssetOnDestroy.Register(testpanel, asset);
                // GameObject.Destroy(go, 10);
             }
